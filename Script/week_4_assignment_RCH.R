@@ -17,4 +17,3 @@ surveys_subset[surveys_subset$"hindfoot_length">32,]
 #This is the values for hindfoot length greater than 32 with NA's ommitted.  If na.omit is not included, NA's will be included
 surveys_long_feet<-na.omit(surveys_subset[surveys_subset$"hindfoot_length">32,])
 surveys_long_feet
-
