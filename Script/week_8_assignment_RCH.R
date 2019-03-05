@@ -7,9 +7,11 @@ am_riv <- read_csv("https://gge-ucd.github.io/R-DAVIS/data/2015_NFA_solinst_08_0
 
 
 #1) Make a datetime column by using paste to combine the date and time columns; remember to convert it to a datetime!
+
 am_riv$datetime <- paste(am_riv$Date, " ", am_riv$Time, sep = "")
 
-am_riv$datetime <- ymd_hms(am_riv$datetime)  #Why do I need to do this step?  I didn't do it the first time, and it looked like it worked in making a column
+am_riv$datetime <- ymd_hms(am_riv$datetime)  
+#Why do I need to do this step?  I didn't do it the first time, and it looked like it worked in making a column
 
 #2) Calculate the weekly mean, max, and min water temperatures and plot as a point plot (all on the same graph)
 
@@ -61,12 +63,16 @@ summary(mloa2)
 
 mloa2$datetime <- paste0(mloa2$year, "-", mloa2$month, "-", mloa2$day, " ", mloa2$hour24, ":", mloa2$min)
 
-mloa2$datetime<- ymd_hm(mloa2$datetime)  #Why do we do this step?
+mloa2$datetime<- ymd_hm(mloa2$datetime)  #Again, I'm still not understanding Why I need to do this step?
 
 #Then, write a function called plot_temp that returns a graph of the temp_C_2m for a single month. The x-axis of the graph should be pulled from a datetime column (so if your data set does not already have a datetime column, you’ll need to create one!)
 
-plot_temp <- function(datetime) {
-  plot <- ggplot(df, aes(datetime, temp_C_2m)) + 
-  geom_line()
+
+plot_temp <- function(monthtoinput, dat = mloa2){
+  df <- filter(dat, month == monthtoinput)
+  plot <- df %>% 
+    ggplot()+ geom_line(aes(x=datetime, y = temp_C_2m), color = "blue")
   return(plot)
 }
+  
+plot_temp(4)  
