@@ -76,3 +76,8 @@ plot_temp <- function(monthtoinput, dat = mloa2){
 }
   
 plot_temp(4)  
+
+
+#monthtoinput doesn't exist outside of the function.  We created it later in the function, but we could still use it
+#dat tells it to use the whole dataframe mloa2.  It will look in our environment for it
+#df creates a new dataframe, but it is in the function
