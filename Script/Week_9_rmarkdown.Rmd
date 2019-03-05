@@ -1,0 +1,87 @@
+---
+title: "Week_9_r_markdown"
+output: html_document
+---
+
+This is an Rmarkdown document.  I can type whatever I want.
+
+ *bold is two asteriks.  Make sure to put the asterisks on both sides*
+ **italics is one asterik**
+
+### pound signs make bigger font
+## two pound signs would be larger than three pound signs
+#how about one pound sign? Even bigger
+
+
+To insert a code chunk: ctrl+alt+i
+
+```{r, warning=FALSE, message=FALSE}
+
+library(tidyverse)
+glimpse(storms)
+
+
+library(viridis)
+
+
+ggplot(data=storms)+
+  geom_jitter(aes(x = as.factor(month), y = pressure, fill = wind), pch=21, alpha= .05) +
+                scale_fill_viridis_c()+
+                theme_bw()+
+                labs(title = "Hurricane Pressure v Month", subtitle = "with Max wind speed", x = "Month")
+
+
+
+
+```
+
+Make sure to delete the install.package from my code
+If I did echo = FALSE, it wouldn't show my code.  putting warning = False, and message = FALSE removes warnings and messages when it it made to an HTML
+
+suppressPackagesStartupMessages(library(tidyverse)) will just show what package you used and will get rid of all the other startup messages
+
+
+writing out equations in Rmarkdown:
+
+If you want to write and equation: you put a $ on either side of it.
+
+$\sum_{i=y}^n x_i$
+
+
+```{r}
+
+library(knitr)
+
+kable(head(storms), caption = "Table using Kable")
+
+htmlTable::htmlTable(head(storms))
+
+#make an interactive table
+
+DT::datatable(storms)
+
+library(plotly)
+
+ggplotly(ggplot(data=storms)+
+  geom_jitter(aes(x = as.factor(month), y = pressure, fill = wind), pch=21, alpha= .05) +
+                scale_fill_viridis_c()+
+                theme_bw()+
+                labs(title = "Hurricane Pressure v Month", subtitle = "with Max wind speed", x = "Month"))
+
+
+```
+
+The Kable and htmlTable lines created tables
+
+
+creating a map:  There is code online for this
+
+Rmardown's website it pretty good
+
+```{r}
+
+```
+
+
+
+
