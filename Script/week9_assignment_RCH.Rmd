@@ -1,0 +1,87 @@
+---
+title: "Week9_assignment"
+author: "Conor Higgins"
+date: "March 12, 2019"
+output: html_document
+---
+
+Well hello there, partner!  
+
+My name is Conor Higgins, and I'm a first year masters student in the Ecology program at UC Davis. 
+
+Generally speaking, my thesis work investigates community level interactions between ungulate herbivores and the associated plant community in an arctic ecosystem, and how these interactions may be impacted by climatic drivers.  My field work is conducted at our lab's long term study site near Kangerlussuaq, Greenland.  I conduct near daily counts of the two large ungulate herbivores there (caribou; *Rangifer tarandus*, and muskoxen; *Ovibos moschatus*) as well as collect data on the timing of various plant phenological stages.  My current research questions revolve around the reciprocal interactions between muskoxen and the plant community.  More specifically: 
+
+#### 1) How does the timing of species-specific plant green-up timing relate to the timing of peak muskox (*Ovibos moschatus*) presence and muskox calf production at the study site? 
+
+and reciprocally 
+
+#### 2) How does the timing of peak muskox presence at the site impact plant species-specific green-up timing, plant abundance, and plant community compositional dynamics?
+
+![Muskoxen: image taken from https://news.nationalgeographic.com/content/dam/news/2018/01/18/muskoxen-climate/01-muskoxen-arctic-climate.ngsversion.1516271410305.adapt.1900.1.jpg](https://news.nationalgeographic.com/content/dam/news/2018/01/18/muskoxen-climate/01-muskoxen-arctic-climate.ngsversion.1516271410305.adapt.1900.1.jpg)
+
+
+
+```{r, warning=FALSE, message=FALSE}
+#Use the storms data (included in RStudio) to create a plotly graph of the relationship between wind and pressure, where the status of the storm is indicated by a color.
+
+library(tidyverse)
+library(plotly)
+
+
+ggplotly(ggplot(data=storms)+
+  geom_point(aes(x = wind, y = pressure, color = status), pch=21, alpha= .05) +
+                scale_fill_viridis_c()+
+                theme_bw()+
+                labs(title = "Hurricane Wind Speed v Pressure", x = "wind speed"))
+
+
+
+```
+
+
+
+```{r, warning=FALSE, message=FALSE}
+#Create a table that identifies the mean wind, pressure, ts_diameter, hu_diameter of each status of storm (remember to remove NAs!). Use the package htmlTable. Round each mean to only two decimal places (Hint look up the function round)
+
+library(htmlTable)
+
+storms <- storms
+
+table <- storms %>%
+  drop_na(ts_diameter, hu_diameter) %>% 
+  group_by(status) %>% 
+  summarise(mean_wind = mean(wind), mean_pressure = mean(pressure), mean_ts = mean(ts_diameter), mean_hu = mean(hu_diameter)) 
+
+?round
+
+table$mean_wind <- round(table$mean_wind, 2)
+table$mean_pressure <- round(table$mean_pressure, 2)
+table$mean_ts <- round(table$mean_ts, 2)
+table$mean_hu <- round(table$mean_hu, 2)
+
+
+
+
+```
+
+
+```{r}
+
+#CHALLENGE Find the duration, in number of days, of every hurricane from 2010 and later, and then use one of the map functions from purrr to write a sentence saying “Hurricane X lasted Y days” for each of these storms.
+
+library(purrr)
+
+stormduration <- storms %>% 
+  filter(year >= 2010, status == "hurricane") %>% 
+  group_by(name) %>% 
+  summarise(duration = diff(range(day)))
+
+map2_chr(stormduration$"name", stormduration$duration, function(x,y) paste("Hurricane", x, "lasted", y, "days"))
+
+
+
+
+
+```
+
+
