@@ -1,3 +1,5 @@
+#This script is just practicing to reassociate myself with R.  I'm practicing viewing specific data and removing certain data
+
 library(tidyverse)
 library(lubridate)
 
@@ -12,3 +14,36 @@ View(Animaldata)
 nrow(Animaldata)
 ncol(Animaldata)
 summary(Phenodata)
+
+BetulaEmerge <- Phenodata[,11]
+View(BetulaEmerge)
+Phenodata[,5]
+BetulaLB <-Phenodata$B.nana.LB
+View(BetulaLB)
+#Both of the above functions pull out just the B. nana leaf bud data
+
+str(Phenodata)
+select(Phenodata, Year, Site, E.G, B.nana.LB)
+
+filter(Phenodata, E.G=="E")
+
+PhenoExclosed <- filter(Phenodata, E.G == "E")
+View(PhenoExclosed)  
+#this is all the data for exclosed plots
+
+BNexclosed <- PhenoExclosed$B.nana.LB
+View(BetulaLBexclosed)
+#this is all the data for B. nana in exclosed plots
+
+
+#Betula leaf bud dates from Exclosed plots excluding NA values.  All other data is still included
+BNE <- PhenoExclosed %>% 
+  filter(!is.na(B.nana.LB))
+
+View(BNE)
+
+#This step removes all other data and all that is left is B.nana LB julian dates
+BNE<- BNE$B.nana.LB
+View(BNE)
+
+summary(BNE)
