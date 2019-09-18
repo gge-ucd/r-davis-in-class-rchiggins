@@ -31,19 +31,19 @@ PhenoExclosed <- filter(Phenodata, E.G == "E")
 View(PhenoExclosed)  
 #this is all the data for exclosed plots
 
-BNexclosed <- PhenoExclosed$B.nana.LB
-View(BetulaLBexclosed)
-#this is all the data for B. nana in exclosed plots
+BNexclosedLBO <- PhenoExclosed$B.nana.LBO
+View(BNexclosedLBO)
+#this is all the LBO data for B. nana in exclosed plots
 
 
-#Betula leaf bud dates from Exclosed plots excluding NA values.  All other data is still included
+#Betula leaf bud open dates from Exclosed plots excluding NA values.  All other data is still included
 BNE <- PhenoExclosed %>% 
-  filter(!is.na(B.nana.LB))
+  filter(!is.na(B.nana.LBO))
 
 View(BNE)
 
 #This step removes all other data and all that is left is B.nana LB julian dates
-BNE<- BNE$B.nana.LB
+BNE<- BNE$B.nana.LBO
 View(BNE)
 
 summary(BNE)
