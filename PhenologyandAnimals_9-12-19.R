@@ -2,12 +2,13 @@
 
 library(tidyverse)
 library(lubridate)
+library(scales)
 
-Phenodata <- read.csv(file = "~/2018-2020 Masters Thesis/Greenland data/Kanger phenology Julian Dates 93-17 SPSS from Eric 9.11.19.csv")
+Phenodata <- read.csv(file = "~/2018-2020 Masters Thesis/Greenland data/Kanger phenology Julian Dates 93-17 SPSS from Eric 9.11.19.csv.csv")
 
 View(Phenodata)
 
-Animaldata <- read.csv(file = "~/2018-2020 Masters Thesis/Greenland data/Kanger Caribou and Muskox counts WITH GENDER AND CALVES 1993 - 2019 Conor 7.29.19 version.csv")
+Animaldata <- read.csv(file = "~/2018-2020 Masters Thesis/Greenland data/Kanger Caribou and Muskox counts WITH GENDER AND CALVES 1993 - 2019 Conor 7.29.19 version.csv.csv")
 
 View(Animaldata)
 
@@ -47,3 +48,14 @@ BNE<- BNE$B.nana.LBO
 View(BNE)
 
 summary(BNE)
+
+Animaldata_jd<-Animaldata %>% 
+  group_by(Year) %>% 
+  mutate(jd_year = as.Date(paste(Year, Julian.Date, sep="-"),"%Y-%j"))
+
+
+#attempt to plot data
+ggplot(data = Animaldata, aes(x = Julian.Date, y= Muskox.daily.total)) +  geom_point() + facet_wrap(~Year)
+
+ggplot(data = Animaldata_jd, aes(x = jd_year, y= Muskox.daily.total)) +  geom_point()
+
