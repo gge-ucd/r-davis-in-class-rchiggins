@@ -72,3 +72,17 @@ ggplot(data = Animaldata, aes(x = Julian.Date, y = Muskox.daily.total, fill=Year
   coord_cartesian(xlim = c(115, 190), expand = FALSE, clip = "off") 
 #Note that Julian Days between 115-190 are the only ones included
 #If I don't want the color gradient, get rid of the fill=Year
+
+
+#Attempt to plot plant phenology data
+ggplot(data = PhenoExclosed, aes(x = Year, y = B.nana.LBO, fill=B.nana.LBO)) + 
+  geom_bar(stat = "identity", width = 1) +
+  facet_grid(~Year, switch = "x", scales = "free_x", space = "free_x") +
+  theme(panel.spacing = unit(0, "lines"), 
+        strip.background = element_blank(),
+        strip.placement = "outside") + 
+  xlab("Year") + theme(text = element_text(size = 8)) +
+  theme (axis.text.x = element_text(color = "grey20", size=5, angle=90, hjust = 0.5, vjust = 0.5))+ 
+  coord_cartesian(xlim = c(115, 190), expand = FALSE, clip = "off") 
+
+ggplot(data = PhenoExclosed, aes(x = Year, y= B.nana.LBO)) +  geom_point()
